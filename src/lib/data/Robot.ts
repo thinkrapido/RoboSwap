@@ -2,17 +2,17 @@
 import bs58 from "bs58"
 import _ from "lodash"
 import hex from "convert-hex"
-import { slice, clamp } from "$lib/utils/math"
+import { slice, clamp, getInt32Bytes } from "$lib/utils/math"
 
 export class Robot {
     private data: number[] = new Array(73)
-    constructor(wallet: string, owner: string, idx: number, ownerIdx: number, swaps: number) {
+    constructor(private wallet: string, private owner: string, private idx: number, private ownerIdx: number, swaps: number) {
         this.data = [
             ...Array.from(bs58.decode(wallet)),
             ...Array.from(bs58.decode(owner)),
             clamp(idx, 0, 25),
             clamp(ownerIdx, 0, 25),
-            ...Array.from(new Uint32Array(swaps)),
+            ...getInt32Bytes(clamp(swaps, 0, 2**32-1)),
         ]
     }
 
@@ -31,18 +31,21 @@ export class Robot {
         )
     }
 
-    get wallet(): string {
+    get walletHash(): string {
         return bs58.encode(slice(this.data, 0, 32))
     }
-    get owner(): string {
+    get ownerHash(): string {
         return bs58.encode(slice(this.data, 32, 32))
     }
     get picHash(): string {
-        return this.hash(clamp(this.data[65], 0, 25), slice(this.data, 32, 32))
-    }
-
-    private hash(idx: number, arr: number[]): string {
-        const newArray = [idx, ..._.take(arr, 15)]
+        let used = slice(this.data,  0, 32) // wallet
+        let owner  = slice(this.data, 32, 32)
+        let idx = this.idx
+        if (used !== owner) {
+            used = owner
+            idx = this.ownerIdx
+        }
+        const newArray = [idx, ..._.take(used)]
         const hash = hex.bytesToHex(newArray)
         return _.chunk(hash, 4).map((d: string[]) => d.join('')).join(':')
     }

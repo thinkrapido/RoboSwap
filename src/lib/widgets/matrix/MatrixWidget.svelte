@@ -2,10 +2,20 @@
 <script lang="ts">
 
     import * as _ from "lodash"
+    import { debouncer } from "$lib/utils/debounce"
 	import RoboPicWidget from "../picture/RoboPicWidget.svelte";
+	import { Wallet, walletStore } from "../wallet/Wallet"
     import { Robot } from "$lib/data/Robot"
+    import { onMount } from "svelte"
 
-    let range: Robot[] = Robot.from('5ZLaVaVJdvdqGmvnS4jYgJ7k54Kdev7f1q5LDytjwqJ6').pics()
+    let range: Robot[] = []
+
+    onMount(() => {
+        walletStore.subscribe(debouncer((wallet: Wallet) => {
+            range = Robot.from(wallet.hash).pics()
+        }, 500))
+    })
+
 
 </script>
 

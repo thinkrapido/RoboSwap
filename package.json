@@ -38,6 +38,10 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@solana/wallet-adapter-wallets": "^0.19.10",
+		"@solana/web3.js": "^1.73.0",
+		"@svelte-on-solana/wallet-adapter-core": "^1.0.11-alpha.0",
+		"@svelte-on-solana/wallet-adapter-ui": "^1.0.21-alpha.0",
 		"@types/bs58": "^4.0.1",
 		"@types/lodash": "^4.14.191",
 		"bs58": "^5.0.0",

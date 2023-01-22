@@ -1,17 +1,22 @@
 
 <script lang="ts">
-	import { randomQuote, randomQuoteByInterval, type Quote } from "$lib/utils/random-robot-quotes";
-	import { onDestroy, onMount } from "svelte";
+	import { debouncer } from "$lib/utils/debounce";
+	import { randomQuote, randomQuoteByInterval, type Quote } from "$lib/utils/random-robot-quotes"
+	import { onDestroy, onMount } from "svelte"
+    import { Wallet, walletStore } from "../wallet/Wallet"
 
 
-    export let message: string = 'Your wallet is not connected.'
+    export let message: string = 'Your phantom wallet is not connected.'
 
     let quote: Quote = randomQuote()
-    let quoteHandle: NodeJS.Timeout  
+    let quoteHandle: NodeJS.Timeout
     onMount(() => {
         quoteHandle = randomQuoteByInterval((q: Quote) => {
             quote = q
         })
+        walletStore.subscribe(debouncer((wallet: Wallet) => {
+            message = wallet.isConnected ? '' : 'Your phantom wallet is not connected.'
+        }, 200))
     })
     onDestroy(() => {
         clearInterval(quoteHandle)
