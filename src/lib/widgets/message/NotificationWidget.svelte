@@ -12,7 +12,7 @@
     let quoteHandle: NodeJS.Timeout
     onMount(() => {
         quoteHandle = randomQuoteByInterval((q: Quote) => {
-            quote = q
+            quote = q || {}
         })
         walletStore.subscribe(debouncer((wallet: Wallet) => {
             message = wallet.isConnected ? '' : 'Your phantom wallet is not connected.'

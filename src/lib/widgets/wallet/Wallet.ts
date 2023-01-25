@@ -5,6 +5,8 @@ import { debouncer } from "$lib/utils/debounce"
 import { writable } from "svelte/store"
 import { walletStore as ws, type WalletStore } from "@svelte-on-solana/wallet-adapter-core"
 import { update } from "lodash"
+import { AnchorProvider, Program } from "@project-serum/anchor"
+ import idl from "../../../../../RoboSwapProgram/target/idl/robo_swap_program.json"
 
 export class Wallet {
     constructor() {
@@ -12,8 +14,9 @@ export class Wallet {
             this._pubkey = value?.publicKey || web3.Keypair.generate().publicKey
             this.isConnected = value?.publicKey ? true : false
         }, 1))
+        console.log(idl)
     }
-    isConnected: boolean = false
+    isConnected = false
 
     private _pubkey: web3.PublicKey | null = null
 
