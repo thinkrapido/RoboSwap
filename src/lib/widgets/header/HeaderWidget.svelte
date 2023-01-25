@@ -10,12 +10,12 @@
 		ConnectionProvider
 	} from '@svelte-on-solana/wallet-adapter-ui';
 	import { clusterApiUrl } from '@solana/web3.js';
-	import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets';
+	import { PhantomWalletAdapter } from '@solana/wallet-adapter-wallets';
 
 	const localStorageKey = 'walletAdapter';
-	const network = clusterApiUrl('devnet'); // localhost or mainnet
+	const network = 'http://localhost:8899'//clusterApiUrl('devnet'); // localhost or mainnet
 
-	let wallets = [new PhantomWalletAdapter(), new SolflareWalletAdapter()];
+	let wallets = [new PhantomWalletAdapter()];
 </script>
 
 <div class="flex">
