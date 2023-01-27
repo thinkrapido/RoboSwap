@@ -1,18 +1,7 @@
-<script>
-    import { network } from "$lib/classes/stores/App";
+<script lang="ts">
+	import Wallet from "./Wallet.svelte";
     import AppWidget from "./App.svelte";
 	import ExternalLink from "./ExternalLink.svelte";
-
-
-    import {
-		WalletProvider,
-		WalletMultiButton,
-		ConnectionProvider
-	} from '@svelte-on-solana/wallet-adapter-ui';
-	import { PhantomWalletAdapter } from '@solana/wallet-adapter-wallets';
-
-    const localStorageKey = 'walletAdapter';
-	const wallets = [new PhantomWalletAdapter()];
 </script>
 
 <div class="flex">
@@ -20,16 +9,14 @@
         RoboSwap
     </h1>
     <div class="grow">
+    </div>
+    <div>
         <div class="outer">
             <div class="inner inline-block">
                 <ExternalLink href="https://robohash.org/">powered by RoboHash</ExternalLink>
                 <br/>
                 <br/>
-                <div class="inline-block">
-                    <WalletProvider {localStorageKey} {wallets} autoConnect />
-                    <ConnectionProvider {network} />
-                    <WalletMultiButton />
-                </div>
+                <Wallet/>
             </div>
         </div>
     </div>
