@@ -7,6 +7,8 @@ import { walletStore, type WalletStore } from "@svelte-on-solana/wallet-adapter-
 import { AnchorProvider, Program } from "@project-serum/anchor"
 import idl from "../../../../../RoboSwapProgram/target/idl/robo_swap_program.json"
 
+export const network = 'http://localhost:8899'//clusterApiUrl('devnet'); // localhost or mainnet
+
 export class App {
     constructor() {
         walletStore.subscribe(debouncer((value?: WalletStore | undefined) => {
@@ -14,7 +16,6 @@ export class App {
             this.isConnected = value?.publicKey ? true : false
             this.createProvider()
         }, 1))
-        console.log(idl)
     }
     isConnected = false
 
@@ -38,18 +39,14 @@ export class App {
     }
     createProvider(): void {
         if (this.isConnected) {
-            const network = 'http://localhost:8899'
             const conn = new web3.Connection(network, 'processed')
             this.provider = new AnchorProvider(conn, window.solana, { preflightCommitment: 'processed' })
-            console.log(this.provider)
             this.program = new Program(idl, new web3.PublicKey(idl.metadata.address), this.provider)
-            console.log(this.program)
         }
     }
 }
 
 export const appStore = writable(new App())
-
 
 walletStore.subscribe(debouncer(ws => {
     appStore.update((update: App) => {

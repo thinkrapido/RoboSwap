@@ -1,4 +1,5 @@
 <script>
+    import { network } from "$lib/widgets/app/App";
     import AppWidget from "$lib/widgets/app/AppWidget.svelte";
 	import ExternalLink from "../navi/ExternalLink.svelte";
 
@@ -8,13 +9,10 @@
 		WalletMultiButton,
 		ConnectionProvider
 	} from '@svelte-on-solana/wallet-adapter-ui';
-	import { clusterApiUrl } from '@solana/web3.js';
 	import { PhantomWalletAdapter } from '@solana/wallet-adapter-wallets';
 
-	const localStorageKey = 'walletAdapter';
-	const network = 'http://localhost:8899'//clusterApiUrl('devnet'); // localhost or mainnet
-
-	let wallets = [new PhantomWalletAdapter()];
+    const localStorageKey = 'walletAdapter';
+	const wallets = [new PhantomWalletAdapter()];
 </script>
 
 <div class="flex">
