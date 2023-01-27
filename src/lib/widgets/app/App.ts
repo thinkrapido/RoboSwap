@@ -13,11 +13,14 @@ export class App {
     constructor() {
         walletStore.subscribe(debouncer((value?: WalletStore | undefined) => {
             this._pubkey = value?.publicKey || null
-            this.isConnected = value?.publicKey ? true : false
+            this._isConnected = value?.publicKey ? true : false
             this.createProvider()
         }, 1))
     }
-    isConnected = false
+    private _isConnected = false
+    get isConnected(): boolean {
+        return this._isConnected
+    }
 
     private _pubkey: web3.PublicKey | null = null
     private provider: AnchorProvider | null = null
@@ -34,11 +37,11 @@ export class App {
         catch (err) {
             this._pubkey = null
         }
-        this.isConnected = this._pubkey ? true : false
+        this._isConnected = this._pubkey ? true : false
         this.createProvider()
     }
     createProvider(): void {
-        if (this.isConnected) {
+        if (this._isConnected) {
             const conn = new web3.Connection(network, 'processed')
             this.provider = new AnchorProvider(conn, window.solana, { preflightCommitment: 'processed' })
             this.program = new Program(idl, new web3.PublicKey(idl.metadata.address), this.provider)

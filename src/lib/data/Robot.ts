@@ -49,4 +49,10 @@ export class Robot {
         const hash = hex.bytesToHex(newArray)
         return _.chunk(hash, 4).map((d: string[]) => d.join('')).join(':')
     }
+    get picUrl(): string {
+        if (this.wallet === "") {
+            return '/images/no-robot.svg'
+        }
+        return `https://robohash.org/${this.picHash}.png`
+    }
 }

@@ -9,6 +9,6 @@
 
 <div class="bg-red-200 h-32 w-32">
     {#if robot}
-        <img src="https://robohash.org/{robot?.picHash}.png" alt={robot?.picHash}/>
+        <img src={robot?.picUrl} alt={robot?.picHash}/>
     {/if}
 </div>
