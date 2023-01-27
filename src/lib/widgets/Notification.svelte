@@ -3,7 +3,7 @@
 	import { debouncer } from "$lib/utils/debounce";
 	import { randomQuote, randomQuoteByInterval, type Quote } from "$lib/utils/random-robot-quotes"
 	import { onDestroy, onMount } from "svelte"
-    import { App, appStore } from "../app/App"
+    import { App, appStore } from "$lib/classes/stores/App"
 
 
     export let message: string = 'Your phantom wallet is not connected.'

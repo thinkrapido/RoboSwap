@@ -1,6 +1,6 @@
 
 <script>
-	import MatrixWidget from "$lib/widgets/matrix/MatrixWidget.svelte";
+	import MatrixWidget from "$lib/widgets/Matrix.svelte";
 
 </script>
 

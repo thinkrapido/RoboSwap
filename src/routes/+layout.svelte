@@ -1,8 +1,8 @@
 <script lang="ts">
   import "../app.css"
-	import HeaderWidget from "$lib/widgets/header/HeaderWidget.svelte";
-	import TabsWidget from "$lib/widgets/tabs/TabsWidget.svelte";
-	import NotificationWidget from "$lib/widgets/message/NotificationWidget.svelte";
+	import HeaderWidget from "$lib/widgets/Header.svelte";
+	import TabsWidget from "$lib/widgets/Tabs.svelte";
+	import NotificationWidget from "$lib/widgets/Notification.svelte";
 </script>
 
 <div class="container mx-auto">

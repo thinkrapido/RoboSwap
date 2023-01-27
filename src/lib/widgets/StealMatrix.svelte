@@ -3,9 +3,9 @@
 
     import * as _ from "lodash"
     import { debouncer } from "$lib/utils/debounce"
-	import RoboPicWidget from "../picture/RoboPicWidget.svelte";
-	import { App, appStore } from "../app/App"
-    import { Robot } from "$lib/data/Robot"
+	import RoboPicWidget from "./RoboPic.svelte";
+	import { App, appStore } from "$lib/classes/stores/App"
+    import { Robot } from "$lib/classes/Robot"
     import { onMount } from "svelte"
 
     let range: Robot[] = []

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import RoboPicWidget from "../picture/RoboPicWidget.svelte"
-	import { App, appStore } from "./App";
-    import { Robot } from "$lib/data/Robot"
+	import RoboPicWidget from "./RoboPic.svelte"
+	import { App, appStore } from "$lib/classes/stores/App";
+    import { Robot } from "$lib/classes/Robot"
     import { shorten } from "$lib/utils/hash"
 	import { onMount } from "svelte";
 	import { debouncer } from "$lib/utils/debounce";

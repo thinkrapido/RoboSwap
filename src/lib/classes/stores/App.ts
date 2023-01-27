@@ -52,8 +52,8 @@ export class App {
 export const appStore = writable(new App())
 
 walletStore.subscribe(debouncer(ws => {
-    appStore.update((update: App) => {
-        update.pubkey(ws?.publicKey)
-        return update
+    appStore.update((app: App) => {
+        app.pubkey(ws?.publicKey)
+        return app
     })
 }))

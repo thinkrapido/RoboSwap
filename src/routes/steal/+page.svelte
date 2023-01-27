@@ -1,8 +1,8 @@
 
 <script lang="ts">
-	import OwnerWidet from "$lib/widgets/steal/OwnerWidet.svelte"
-	import StealMatrixWidget from "$lib/widgets/steal/StealMatrixWidget.svelte"
-	import { App, appStore } from "$lib/widgets/app/App"
+	import OwnerWidet from "$lib/widgets/Owner.svelte"
+	import StealMatrixWidget from "$lib/widgets/StealMatrix.svelte"
+	import { App, appStore } from "$lib/classes/stores/App"
 	import { onMount } from "svelte"
 
 	let robberHash = ""

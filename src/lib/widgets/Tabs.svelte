@@ -1,5 +1,5 @@
 <script>
-	import TabWidget from "./TabWidget.svelte";
+	import TabWidget from "./Tab.svelte";
 </script>
 
 <div class="text-center">

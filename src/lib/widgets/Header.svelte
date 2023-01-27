@@ -1,7 +1,7 @@
 <script>
-    import { network } from "$lib/widgets/app/App";
-    import AppWidget from "$lib/widgets/app/AppWidget.svelte";
-	import ExternalLink from "../navi/ExternalLink.svelte";
+    import { network } from "$lib/classes/stores/App";
+    import AppWidget from "./App.svelte";
+	import ExternalLink from "./ExternalLink.svelte";
 
 
     import {
