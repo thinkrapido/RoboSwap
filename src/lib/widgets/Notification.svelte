@@ -14,8 +14,8 @@
         quoteHandle = randomQuoteByInterval((q: Quote) => {
             quote = q || {}
         })
-        appStore.subscribe(debouncer((wallet: App) => {
-            message = wallet.isConnected ? '' : 'Your phantom wallet is not connected.'
+        appStore.subscribe(debouncer((app: App) => {
+            message = app.isConnected ? '' : 'Your phantom wallet is not connected.'
         }, 200))
     })
     onDestroy(() => {

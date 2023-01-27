@@ -1,7 +1,7 @@
 <script lang="ts">
 
     import _ from "lodash"
-	import { Robot } from "$lib/classes/Robot"
+	import type { Robot } from "$lib/classes/Robot"
 
     export let robot: Robot
 

@@ -6,11 +6,9 @@
 	import { onMount } from "svelte";
 	import { debouncer } from "$lib/utils/debounce";
     let robot: Robot
-    let isConnected: boolean = false
     onMount(() => {
-        appStore.subscribe(debouncer((wallet: App) => {
-            isConnected = wallet.isConnected
-            robot = Robot.from(wallet.hash)
+        appStore.subscribe(debouncer((app: App) => {
+            robot = Robot.from(app.hash)
         }, 500))
     })
 </script>
