@@ -1,14 +1,15 @@
 <script lang="ts">
 
     import { Robot } from "$lib/classes/Robot"
-    import RoboPicWidget from "./RoboPic.svelte";
+    import RoboPic from "./RoboPic.svelte";
     import { App, appStore } from "$lib/classes/stores/App"
+    import { shorten } from "$lib/utils/hash"
 	import { onMount } from "svelte";
 	import { debouncer } from "$lib/utils/debounce";
 
     let robber: Robot = Robot.from("")
-    let victim: Robot = Robot.from("")
-    export let hash: string = ""
+    export let victim: Robot = Robot.from("")
+    export let hash: string
 	export let view: 'robber' | 'victim' = 'robber'
 
     onMount(debouncer(() => {
@@ -23,7 +24,7 @@
         })
     }))
     $: {
-        victim = Robot.from(hash)
+        //victim = Robot.from(hash || "")
     }
 
     const steal = () => {
@@ -38,10 +39,10 @@
         </div>
         <div class="inline-block flex">
             <div class="inline-block p-4">
-                <RoboPicWidget robot={robber}/>
+                <RoboPic robot={robber}/>
             </div>
             <div class="inline-block p-4" class:robber={view === 'robber'}>
-                <RoboPicWidget robot={robber}/>
+                <RoboPic robot={robber}/>
             </div>
         </div>
     </div>
@@ -57,14 +58,14 @@
         </div>
         <div class="inline-block flex">
             <div class="inline-block p-4" class:victim={view === 'victim'}>
-                <RoboPicWidget robot={victim}/>
+                <RoboPic robot={victim}/>
             </div>
             <div class="inline-block p-4">
-                <RoboPicWidget robot={victim}/>
+                <RoboPic robot={victim}/>
             </div>
         </div>
         <div class="text-center mt-4">
-            <input class="text-gray-900" bind:value={hash}/>
+            <input class="text-gray-900 text-center" value={victim.isFake ? "" : shorten(hash)}/>
         </div>
     </div>
 </div>

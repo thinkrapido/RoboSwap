@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Wallet from "./Wallet.svelte";
-    import AppWidget from "./App.svelte";
+    import App from "./App.svelte";
 	import ExternalLink from "./ExternalLink.svelte";
 </script>
 
@@ -20,7 +20,7 @@
             </div>
         </div>
     </div>
-    <AppWidget />    
+    <App />    
 </div>
 
 <style lang="postcss">

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import RoboPicWidget from "./RoboPic.svelte"
+	import RoboPic from "./RoboPic.svelte"
 	import { App, appStore } from "$lib/classes/stores/App";
     import { Robot } from "$lib/classes/Robot"
     import { shorten } from "$lib/utils/hash"
@@ -14,9 +14,9 @@
 </script>
 
 <div class="bg-red-200 h-32 w-32 m-3">
-    <RoboPicWidget robot={robot}/>
+    <RoboPic robot={robot}/>
     <div class="text-center">
-        <div class="text-center">{shorten(robot?.walletHash)}</div>
+        <div class="text-center">{shorten(robot?.robberHash)}</div>
     </div>
     {#if !$appStore.isConnected}
         <div class="overlay">

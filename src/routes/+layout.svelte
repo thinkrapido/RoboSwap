@@ -1,17 +1,17 @@
 <script lang="ts">
   import "../app.css"
-	import HeaderWidget from "$lib/widgets/Header.svelte";
-	import TabsWidget from "$lib/widgets/Tabs.svelte";
-	import NotificationWidget from "$lib/widgets/Notification.svelte";
+	import Header from "$lib/widgets/Header.svelte";
+	import Tabs from "$lib/widgets/Tabs.svelte";
+	import Notification from "$lib/widgets/Notification.svelte";
 </script>
 
 <div class="container mx-auto">
 
-  <HeaderWidget />
+  <Header />
 
-  <TabsWidget />
+  <Tabs />
 
-  <NotificationWidget/>
+  <Notification/>
 
   <slot />
 
