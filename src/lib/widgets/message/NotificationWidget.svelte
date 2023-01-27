@@ -3,7 +3,7 @@
 	import { debouncer } from "$lib/utils/debounce";
 	import { randomQuote, randomQuoteByInterval, type Quote } from "$lib/utils/random-robot-quotes"
 	import { onDestroy, onMount } from "svelte"
-    import { Wallet, walletStore } from "../wallet/Wallet"
+    import { App, appStore } from "../app/App"
 
 
     export let message: string = 'Your phantom wallet is not connected.'
@@ -14,7 +14,7 @@
         quoteHandle = randomQuoteByInterval((q: Quote) => {
             quote = q || {}
         })
-        walletStore.subscribe(debouncer((wallet: Wallet) => {
+        appStore.subscribe(debouncer((wallet: App) => {
             message = wallet.isConnected ? '' : 'Your phantom wallet is not connected.'
         }, 200))
     })

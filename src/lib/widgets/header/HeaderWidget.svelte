@@ -1,7 +1,6 @@
 <script>
-    import WalletWidget from "$lib/widgets/wallet/WalletWidget.svelte";
+    import AppWidget from "$lib/widgets/app/AppWidget.svelte";
 	import ExternalLink from "../navi/ExternalLink.svelte";
-    import { Wallet } from "$lib/widgets/wallet/Wallet"
 
 
     import {
@@ -36,7 +35,7 @@
             </div>
         </div>
     </div>
-    <WalletWidget />    
+    <AppWidget />    
 </div>
 
 <style lang="postcss">

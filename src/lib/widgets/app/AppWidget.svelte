@@ -1,6 +1,6 @@
 <script lang="ts">
 	import RoboPicWidget from "../picture/RoboPicWidget.svelte"
-	import { Wallet, walletStore } from "./Wallet";
+	import { App, appStore } from "./App";
     import { Robot } from "$lib/data/Robot"
     import { shorten } from "$lib/utils/hash"
 	import { onMount } from "svelte";
@@ -8,7 +8,7 @@
     let robot: Robot
     let isConnected: boolean = false
     onMount(() => {
-        walletStore.subscribe(debouncer((wallet: Wallet) => {
+        appStore.subscribe(debouncer((wallet: App) => {
             isConnected = wallet.isConnected
             robot = Robot.from(wallet.hash)
         }, 500))
@@ -20,7 +20,7 @@
     <div class="text-center">
         <div class="text-center">{shorten(robot?.walletHash)}</div>
     </div>
-    {#if !$walletStore.isConnected}
+    {#if !$appStore.isConnected}
         <div class="overlay">
             <div class="inner">
                 connect wallet

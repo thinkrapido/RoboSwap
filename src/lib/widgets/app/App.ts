@@ -3,13 +3,13 @@ import * as web3 from "@solana/web3.js"
 
 import { debouncer } from "$lib/utils/debounce"
 import { writable } from "svelte/store"
-import { walletStore as ws, type WalletStore } from "@svelte-on-solana/wallet-adapter-core"
+import { walletStore, type WalletStore } from "@svelte-on-solana/wallet-adapter-core"
 import { AnchorProvider, Program } from "@project-serum/anchor"
 import idl from "../../../../../RoboSwapProgram/target/idl/robo_swap_program.json"
 
-export class Wallet {
+export class App {
     constructor() {
-        ws.subscribe(debouncer((value?: WalletStore | undefined) => {
+        walletStore.subscribe(debouncer((value?: WalletStore | undefined) => {
             this._pubkey = value?.publicKey || null
             this.isConnected = value?.publicKey ? true : false
             this.createProvider()
@@ -48,11 +48,11 @@ export class Wallet {
     }
 }
 
-export const walletStore = writable(new Wallet())
+export const appStore = writable(new App())
 
 
-ws.subscribe(debouncer(ws => {
-    walletStore.update((update: Wallet) => {
+walletStore.subscribe(debouncer(ws => {
+    appStore.update((update: App) => {
         update.pubkey(ws?.publicKey)
         return update
     })
