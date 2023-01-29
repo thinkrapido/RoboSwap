@@ -19,6 +19,6 @@
 </script>
 
 
-<Matrix robots={robots} let:picUrl={picUrl}>
-	<RoboPic picUrl={picUrl}/>
+<Matrix robots={robots} let:picUrl={picUrl} let:stolenIdx>
+	<RoboPic picUrl={picUrl} stolen={robots.stolen(stolenIdx)}/>
 </Matrix>

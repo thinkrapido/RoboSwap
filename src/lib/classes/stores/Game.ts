@@ -40,21 +40,24 @@ export class GameStore {
     })
     startPlaying() {
         this.initialize()
-        .then(() => {
-            this.initializeWebapp()
-        })
-        .catch((err) => {
-            console.error(err.message)
-        })
+            .then(() => {
+                this.initializeWebapp()
+            })
+            .catch((err) => {
+                console.error(err.message)
+            })
     }
     stopPlaying() {
         this.delete()
-        .then(() => {
-            this.initializeWebapp()
-        })
-        .catch((err) => {
-            console.error(err.message)
-        })
+            .then(() => {
+                this.initializeWebapp()
+            })
+            .catch((err) => {
+                console.error(err.message)
+            })
+    }
+    async steal(robber: web3.PublicKey, robber_idx: number, victim: web3.PublicKey, victim_idx: number) {
+        await this.stealFrom(robber, robber_idx, victim, victim_idx)
     }
     private async initialize(): Promise<void> {
         if (!this._app) {
@@ -87,8 +90,8 @@ export class GameStore {
             app.initialized = false
             return app
         })
-}
-    async stealFrom(robber: web3.PublicKey, robber_idx: number, victim: web3.PublicKey, victim_idx: number): Promise<void> {
+    }
+    private async stealFrom(robber: web3.PublicKey, robber_idx: number, victim: web3.PublicKey, victim_idx: number): Promise<void> {
         if (!this._app) {
             return
         }
@@ -96,7 +99,9 @@ export class GameStore {
             .steal(robber_idx, victim_idx)
             .accounts({
                 robber: robber,
+                robberPda: await this.pda(robber),
                 victim: victim,
+                victimPda: await this.pda(victim),
             })
             .rpc()
     }
@@ -142,7 +147,7 @@ export const getRandomRobots = (): GameRobot[] => {
         wallet,
         owner: wallet,
         idx: d,
-        swaps: 0
+        stolen: 0
     }))
 }
 
@@ -154,6 +159,6 @@ export interface GameRobot {
     wallet: web3.PublicKey,
     owner: web3.PublicKey,
     idx: number,
-    swaps: number,
+    stolen: number,
 }
 

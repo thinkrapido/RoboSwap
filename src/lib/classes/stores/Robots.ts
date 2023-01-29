@@ -42,7 +42,11 @@ export class Robots {
         return picUrl(this.pubkey0())
     }
     picUrl(idx: number): string {
-        return picUrl(this.pubkey(idx), idx)
+        return picUrl(this.pubkey(idx), this.robot(idx).idx)
+    }
+
+    stolen(idx: number): number {
+        return this.robot(idx).stolen
     }
 }
 

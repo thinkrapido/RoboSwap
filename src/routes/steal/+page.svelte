@@ -34,11 +34,11 @@
 <div class="mx-auto w-[300px] text-center">SELECT A ROBOT</div>
 
 {#if view == 'robber' }
-<Matrix robots={robber} let:picUrl={picUrl} on:selected={selectRobberIndex}>
-	<RoboPic picUrl={picUrl}/>
+<Matrix robots={robber} let:picUrl={picUrl} on:selected={selectRobberIndex} let:stolenIdx>
+	<RoboPic picUrl={picUrl} stolen={robber.stolen(stolenIdx)}/>
 </Matrix>
 {:else}
-<Matrix robots={victim} let:picUrl={picUrl} on:selected={selectVictimIndex}>
-	<RoboPic picUrl={picUrl}/>
+<Matrix robots={victim} let:picUrl={picUrl} on:selected={selectVictimIndex} let:stolenIdx>
+	<RoboPic picUrl={picUrl} stolen={victim.stolen(stolenIdx)}/>
 </Matrix>
 {/if}

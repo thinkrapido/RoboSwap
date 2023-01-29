@@ -18,7 +18,7 @@
 <div class="flex flex-wrap mx-auto w-[800px] my-12">
         {#each _.range(1, 26) as idx}
             <div class="p-4" on:click={() => { selected(idx) }}>
-                <slot picUrl={robots.picUrl(idx)}/>
+                <slot picUrl={robots.picUrl(idx)} stolenIdx={idx}/>
             </div>
         {/each }
 </div>
