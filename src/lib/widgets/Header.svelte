@@ -27,12 +27,10 @@
                 <br/>
                 <Wallet/>
                 {#if $appStore.isConnected}
-                <!-- <div on:click={startPlaying}>Start playing</div> -->
-
                     {#if !$appStore.isInitialized}
-                        <div on:click={startPlaying}>Start playing</div>
+                        <div class="rounded-sm bg-green-400 m-4 py-3 text-gray-900 hover:bg-green-200" on:click={startPlaying}>Initialize Game</div>
                     {:else}
-                        <div on:click={stopPlaying}>Stop playing</div>
+                        <div class="rounded-sm bg-red-400 m-4 py-3 text-gray-900 hover:bg-red-200" on:click={stopPlaying}>Delete all Data</div>
                     {/if}
                 {/if}
             </div>

@@ -13,6 +13,7 @@ export class App {
     constructor() {
         walletStore.subscribe(debouncer((value?: WalletStore | undefined) => {
             this.pubkey = value?.publicKey || undefined
+            get(gameStore).app = this
         }, 1))
     }
 
@@ -26,10 +27,6 @@ export class App {
             const conn = new web3.Connection(network, 'processed')
             this._provider = new AnchorProvider(conn, (window as any).solana, { preflightCommitment: 'processed' })
             this._program = new Program(idl as Idl, this.programId, this._provider)
-            appStore.update((app: App): App => {
-                app.initialized = true
-                return app
-            })
         }
         else {
             this._provider = undefined
@@ -61,11 +58,6 @@ export class App {
     }
     set initialized(value: boolean) {
         if (value && this.isConnected) {
-            const gs = get(gameStore)
-            gs.app = this
-            gs.robots(this.pubkey).then((robots) => {
-                robberStore.set(robots)
-            })
             this._isInitialized = true
         }
         else {

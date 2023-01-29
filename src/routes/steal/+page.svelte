@@ -2,38 +2,25 @@
 <script lang="ts">
 	import Owner from "$lib/widgets/Owner.svelte"
 	import Matrix from "$lib/widgets/Matrix.svelte"
-	import { App, appStore } from "$lib/classes/stores/App"
-	import { onMount } from "svelte"
 	import RoboPic from "$lib/widgets/RoboPic.svelte";
 	import { Robots } from "$lib/classes/stores/Robots";
 
-	let robberRobots: Robots[] = []
-	let victimRobots: Robots[] = Robots.from("").pics()
+	let robberRobots: Robots = new Robots()
+	let victimRobots: Robots = new Robots()
 	let view: 'robber' | 'victim' = 'robber'
-
-	onMount(() => {
-		appStore.subscribe((app: App) => {
-			if (app.isConnected) {
-				robberRobots = Robots.from(app.hash).pics()
-			}
-			else {
-				robberRobots = Robots.from("").pics()
-			}
-		})
-	})
 
 </script>
 
-<Owner hash={victimRobots[0]?.robberHash || ""} bind:view={view}/>
+<Owner bind:view={view}/>
 
 <div class="mx-auto w-[300px] text-center">SELECT A ROBOT</div>
 
 {#if view == 'robber' }
-<Matrix range={robberRobots} let:robot={robot}>
-	<RoboPic robot={robot}/>
+<Matrix robots={robberRobots} let:picUrl={picUrl}>
+	<RoboPic picUrl={picUrl}/>
 </Matrix>
 {:else}
-<Matrix range={victimRobots} let:robot={robot}>
-	<RoboPic robot={robot}/>
+<Matrix robots={victimRobots} let:picUrl={picUrl}>
+	<RoboPic picUrl={picUrl}/>
 </Matrix>
 {/if}

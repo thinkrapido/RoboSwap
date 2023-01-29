@@ -2,7 +2,8 @@ import _ from "lodash"
 import { appStore, App } from "./App"
 import { web3, utils } from "@project-serum/anchor"
 import { writable } from "svelte/store"
-import { Robots } from "./Robots"
+import { robberStore, Robots } from "./Robots"
+import { debouncer } from "$lib/utils/debounce"
 
 export const MAX_ROBOTS = 25
 
@@ -12,16 +13,45 @@ export class GameStore {
     private _app: App | undefined
     set app(value: App | undefined) {
         this._app = value
+        this.initializeWebapp()
     }
 
+    initializeWebapp = debouncer(function() {
+        this.gameRobots(this._app.pubkey).then((robots) => {
+            if (!!robots) {
+                appStore.update((app: App): App => {
+                    app.initialized = true
+                    return app
+                })
+            }
+            else {
+                appStore.update((app: App): App => {
+                    app.initialized = false
+                    return app
+                })
+            }
+            this.robots(this._app.pubkey).then((newRobots: Robots) => {
+                robberStore.update((robots: Robots): Robots => {
+                    robots = newRobots
+                    return robots
+                })
+            })
+        })
+    })
     startPlaying() {
         this.initialize()
+        .then(() => {
+            this.initializeWebapp()
+        })
         .catch((err) => {
             console.error(err.message)
         })
     }
     stopPlaying() {
         this.delete()
+        .then(() => {
+            this.initializeWebapp()
+        })
         .catch((err) => {
             console.error(err.message)
         })
@@ -34,7 +64,7 @@ export class GameStore {
             .initialize()
             .accounts({
                 user: this.signer()._publicKey,
-                pda: await this.pda(),
+                pda: await this.pda(this.signer()._publicKey),
             })
             .rpc()
             appStore.update((app: App): App => {
@@ -50,7 +80,7 @@ export class GameStore {
         .delete()
         .accounts({
             receiver: this.signer()._publicKey,
-            pda: await this.pda(),
+            pda: await this.pda(this.signer()._publicKey),
         })
         .rpc()
         appStore.update((app: App): App => {
@@ -70,26 +100,22 @@ export class GameStore {
             })
             .rpc()
     }
-    async robots(pubkey: web3.PublicKey | undefined): Promise<Robots> {
+    async robots(pubkey: web3.PublicKey): Promise<Robots> {
         return new Robots(await this.gameRobots(pubkey))
     }
-    async gameRobots(pubkey: web3.PublicKey | undefined): Promise<GameRobot[] | undefined> {
+    async gameRobots(pubkey: web3.PublicKey): Promise<GameRobot[] | undefined> {
         let out
-        if (this._app && pubkey) {
-            const pda = await this.pda()
-    
-            try {
-                const game = (await this._app.program?.account.game.fetch(pda) as Game | undefined)
-                out = game?.robots || out
-            }
-            catch (err) {
-                console.error(err.message)
-            }
+        const pda = await this.pda(pubkey)
+        try {
+            const game = (await this._app?.program?.account.game.fetch(pda, { commtiment: 'confirmed'}) as Game | undefined)
+            out = game?.robots || out
+        }
+        catch (err) {
+            console.error(err.message)
         }
         return out
     }
-    async pda(): Promise<web3.PublicKey> {
-        const pubkey = this._app?.pubkey
+    async pda(pubkey: web3.PublicKey): Promise<web3.PublicKey | undefined> {
         let out
         if (this._app && pubkey) {
             const [pda, _] = web3.PublicKey
@@ -101,7 +127,7 @@ export class GameStore {
             )
             out = pda
         }
-        return out || web3.Keypair.generate().publicKey
+        return out
     }
     signer(): any {
         return this._app?.provider?.wallet

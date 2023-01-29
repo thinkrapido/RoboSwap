@@ -2,30 +2,11 @@
 
     import { Robots } from "$lib/classes/stores/Robots"
     import RoboPic from "./RoboPic.svelte";
-    import { App, appStore } from "$lib/classes/stores/App"
     import { shorten } from "$lib/utils/hash"
-	import { onMount } from "svelte";
-	import { debouncer } from "$lib/utils/debounce";
 
-    let robber: Robots = Robots.from("")
-    export let victim: Robots = Robots.from("")
-    export let hash: string
+    let robber: Robots = new Robots()
+    let victim: Robots = new Robots()
 	export let view: 'robber' | 'victim' = 'robber'
-
-    onMount(debouncer(() => {
-        robber = Robots.from("")
-        appStore.subscribe((app: App) => {
-            if (app.isConnected) {
-                robber = Robots.from(app.hash)
-            }
-            else {
-                robber = Robots.from("")
-            }
-        })
-    }))
-    $: {
-        //victim = Robots.from(hash || "")
-    }
 
     const steal = () => {
         console.log('steal')
