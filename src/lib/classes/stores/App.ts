@@ -2,6 +2,7 @@
 import { debouncer } from "$lib/utils/debounce"
 import { writable } from "svelte/store"
 import { walletStore, type WalletStore } from "@svelte-on-solana/wallet-adapter-core"
+import { robberStore, RobotStore } from "./Robot"
 import { AnchorProvider, Program, type Idl, web3 } from "@project-serum/anchor"
 import idl from "../../../../../RoboSwapProgram/target/idl/robo_swap_program.json"
 
@@ -29,6 +30,10 @@ export class App {
             this._provider = undefined
             this._program = undefined
         }
+        robberStore.update((robberStore: RobotStore): RobotStore => {
+            robberStore.setPubkey(pubkey)
+            return robberStore
+        })
     }
     get pubkey(): web3.PublicKey | undefined {
         return this._pubkey

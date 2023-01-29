@@ -5,7 +5,7 @@
 	import { App, appStore } from "$lib/classes/stores/App"
 	import { onMount } from "svelte"
 	import RoboPic from "$lib/widgets/RoboPic.svelte";
-	import { Robot } from "$lib/classes/Robot";
+	import { Robot } from "$lib/classes/stores/Robot";
 
 	let robberRobots: Robot[] = []
 	let victimRobots: Robot[] = Robot.from("").pics()

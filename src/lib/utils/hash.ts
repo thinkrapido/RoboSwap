@@ -1,7 +1,7 @@
 
 import { web3 } from "@project-serum/anchor"
 import hex from "convert-hex"
-import _ from "lodash"
+import _, { clamp } from "lodash"
 
 export const shorten = (hash: string): string => {
     const left  = _.take(hash, 3).join('')
@@ -9,8 +9,8 @@ export const shorten = (hash: string): string => {
     return `${left}..${right}`
 }
 
-export const hash = (pubkey: web3.PublicKey | undefined): string => {
-    return (pubkey ?? web3.Keypair.generate().publicKey).toBase58()
+export const hash = (pubkey: web3.PublicKey): string => {
+    return pubkey.toBase58()
 }
 
 const picHash = (pubkey: web3.PublicKey, idx: number): string => {
@@ -19,6 +19,7 @@ const picHash = (pubkey: web3.PublicKey, idx: number): string => {
     return _.chunk(hash, 4).map((d: string[]): string => d.join('')).join(':')
 }
 export const picUrl = (pubkey: web3.PublicKey | undefined, idx: number = 0): string => {
+    idx = clamp(idx, 0, 25)
     if (!pubkey) {
         return '/images/no-robot.svg'
     }

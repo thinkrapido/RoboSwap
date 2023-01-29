@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import { Robot } from "$lib/classes/Robot"
+    import { Robot } from "$lib/classes/stores/Robot"
     import RoboPic from "./RoboPic.svelte";
     import { App, appStore } from "$lib/classes/stores/App"
     import { shorten } from "$lib/utils/hash"

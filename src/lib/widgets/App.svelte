@@ -1,24 +1,25 @@
 <script lang="ts">
 	import RoboPic from "./RoboPic.svelte"
-	import { App, appStore } from "$lib/classes/stores/App";
-    import { Robot } from "$lib/classes/Robot"
-    import { shorten } from "$lib/utils/hash"
+	import { robberStore, type Robot, RobotStore } from "$lib/classes/stores/Robot";
+    import { hash, shorten } from "$lib/utils/hash"
 	import { onMount } from "svelte";
 	import { debouncer } from "$lib/utils/debounce";
+	import { web3 } from "@project-serum/anchor";
     let robot: Robot
+    let robotHash: web3.PublicKey = web3.Keypair.generate().publicKey
     onMount(() => {
-        appStore.subscribe(debouncer((app: App) => {
-            robot = Robot.from(app.hash)
+        robberStore.subscribe(debouncer((robberStore: RobotStore) => {
+            robot = robberStore.getRobotOwner()
         }, 500))
     })
 </script>
 
 <div class="bg-red-200 h-32 w-32 m-3">
-    <RoboPic robot={robot}/>
+    <RoboPic robot={robot} isOwner={true}/>
     <div class="text-center">
-        <div class="text-center">{shorten(robot?.robberHash)}</div>
+        <div class="text-center">{shorten(hash(robotHash))}</div>
     </div>
-    {#if !$appStore.isConnected}
+    {#if !$robberStore.isConnected}
         <div class="overlay">
             <div class="inner">
                 connect wallet
