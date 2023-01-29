@@ -4,6 +4,9 @@ import hex from "convert-hex"
 import _, { clamp } from "lodash"
 
 export const shorten = (hash: string): string => {
+    if (!hash) {
+        return ""
+    }
     const left  = _.take(hash, 4).join('')
     const right = _.takeRight(hash, 4).join('')
     return `${left}..${right}`

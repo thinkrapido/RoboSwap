@@ -1,16 +1,28 @@
 <script lang="ts">
 
-    import { Robots } from "$lib/classes/stores/Robots"
+    import { robberStore, Robots, victimStore } from "$lib/classes/stores/Robots"
     import RoboPic from "./RoboPic.svelte";
     import { shorten } from "$lib/utils/hash"
+	import { onMount } from "svelte";
 
     let robber: Robots = new Robots()
     let victim: Robots = new Robots()
+    let victimHash: string = ""
 	export let view: 'robber' | 'victim' = 'robber'
+    export let robberIdx: number = 1
+    export let victimIdx: number = 1
 
     const steal = () => {
         console.log('steal')
     }
+    onMount(() => {
+        robberStore.subscribe((r: Robots) => {
+            robber = new Robots(r.robots())
+        })
+        victimStore.subscribe((v: Robots) => {
+            victim = new Robots(v.robots())
+        })
+    })
 
 </script>
 <div class="flow m-4 mx-auto w-[900px]">
@@ -20,10 +32,10 @@
         </div>
         <div class="inline-block flex">
             <div class="inline-block p-4">
-                <RoboPic robot={robber}/>
+                <RoboPic picUrl={robber.picUrl0()}/>
             </div>
             <div class="inline-block p-4" class:robber={view === 'robber'}>
-                <RoboPic robot={robber}/>
+                <RoboPic picUrl={robber.picUrl(robberIdx)}/>
             </div>
         </div>
     </div>
@@ -39,14 +51,14 @@
         </div>
         <div class="inline-block flex">
             <div class="inline-block p-4" class:victim={view === 'victim'}>
-                <RoboPic robot={victim}/>
+                <RoboPic picUrl={victim.picUrl(victimIdx)}/>
             </div>
             <div class="inline-block p-4">
-                <RoboPic robot={victim}/>
+                <RoboPic picUrl={victim.picUrl0()}/>
             </div>
         </div>
         <div class="text-center mt-4">
-            <input class="text-gray-900 text-center" value={victim.isFake ? "" : shorten(hash)}/>
+            <input class="text-gray-900 text-center" value={victimHash ? "" : shorten(victimHash)}/>
         </div>
     </div>
 </div>
