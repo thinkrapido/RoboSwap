@@ -5,19 +5,19 @@
 	import { App, appStore } from "$lib/classes/stores/App"
 	import { onMount } from "svelte"
 	import RoboPic from "$lib/widgets/RoboPic.svelte";
-	import { Robot } from "$lib/classes/stores/Robot";
+	import { Robots } from "$lib/classes/stores/Robots";
 
-	let robberRobots: Robot[] = []
-	let victimRobots: Robot[] = Robot.from("").pics()
+	let robberRobots: Robots[] = []
+	let victimRobots: Robots[] = Robots.from("").pics()
 	let view: 'robber' | 'victim' = 'robber'
 
 	onMount(() => {
 		appStore.subscribe((app: App) => {
 			if (app.isConnected) {
-				robberRobots = Robot.from(app.hash).pics()
+				robberRobots = Robots.from(app.hash).pics()
 			}
 			else {
-				robberRobots = Robot.from("").pics()
+				robberRobots = Robots.from("").pics()
 			}
 		})
 	})

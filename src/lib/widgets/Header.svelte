@@ -2,6 +2,15 @@
 	import Wallet from "./Wallet.svelte";
     import App from "./App.svelte";
 	import ExternalLink from "./ExternalLink.svelte";
+    import { appStore, type App as A } from "$lib/classes/stores/App";
+    import { gameStore } from "$lib/classes/stores/Game";
+
+    const startPlaying = () => {
+        $gameStore.startPlaying()
+    }
+    const stopPlaying = () => {
+        $gameStore.stopPlaying()
+    }
 </script>
 
 <div class="flex">
@@ -17,6 +26,15 @@
                 <br/>
                 <br/>
                 <Wallet/>
+                {#if $appStore.isConnected}
+                <!-- <div on:click={startPlaying}>Start playing</div> -->
+
+                    {#if !$appStore.isInitialized}
+                        <div on:click={startPlaying}>Start playing</div>
+                    {:else}
+                        <div on:click={stopPlaying}>Stop playing</div>
+                    {/if}
+                {/if}
             </div>
         </div>
     </div>

@@ -1,16 +1,17 @@
 
 <script lang="ts">
-	import { robberStore, type Robot, RobotStore } from "$lib/classes/stores/Robot";
+	import type { GameRobot } from "$lib/classes/stores/Game";
+	import { robberStore, Robots } from "$lib/classes/stores/Robots";
 	import { debouncer } from "$lib/utils/debounce";
 	import Matrix from "$lib/widgets/Matrix.svelte";
 	import RoboPic from "$lib/widgets/RoboPic.svelte";
 	import { onMount } from "svelte";
 
-	let range: Robot[] = []
+	let robots: Robots = new Robots()
 
     onMount(() => {
-        robberStore.subscribe(debouncer((robberStore: RobotStore) => {
-            range = robberStore.robots
+        robberStore.subscribe(debouncer((robberStore: Robots) => {
+            robots = robberStore
         }, 500))
     })
 
@@ -18,6 +19,6 @@
 </script>
 
 
-<Matrix range={range} let:robot={robot}>
-	<RoboPic robot={robot}/>
+<Matrix robots={robots} let:picUrl={picUrl}>
+	<RoboPic picUrl={picUrl}/>
 </Matrix>

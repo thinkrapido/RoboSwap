@@ -1,30 +1,30 @@
 <script lang="ts">
 
-    import { Robot } from "$lib/classes/stores/Robot"
+    import { Robots } from "$lib/classes/stores/Robots"
     import RoboPic from "./RoboPic.svelte";
     import { App, appStore } from "$lib/classes/stores/App"
     import { shorten } from "$lib/utils/hash"
 	import { onMount } from "svelte";
 	import { debouncer } from "$lib/utils/debounce";
 
-    let robber: Robot = Robot.from("")
-    export let victim: Robot = Robot.from("")
+    let robber: Robots = Robots.from("")
+    export let victim: Robots = Robots.from("")
     export let hash: string
 	export let view: 'robber' | 'victim' = 'robber'
 
     onMount(debouncer(() => {
-        robber = Robot.from("")
+        robber = Robots.from("")
         appStore.subscribe((app: App) => {
             if (app.isConnected) {
-                robber = Robot.from(app.hash)
+                robber = Robots.from(app.hash)
             }
             else {
-                robber = Robot.from("")
+                robber = Robots.from("")
             }
         })
     }))
     $: {
-        //victim = Robot.from(hash || "")
+        //victim = Robots.from(hash || "")
     }
 
     const steal = () => {
