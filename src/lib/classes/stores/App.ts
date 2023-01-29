@@ -15,22 +15,32 @@ export class App {
     }
 
     private _pubkey: web3.PublicKey | undefined = undefined
-    private provider: AnchorProvider | undefined = undefined
-    private program: Program | undefined = undefined
+    private _provider: AnchorProvider | undefined = undefined
+    private _program: Program | undefined = undefined
 
-    get isConnected(): boolean {
-        return !!this._pubkey
-    }
-    set pubkey(pubkey: web3.PublicKey|undefined) {
+    set pubkey(pubkey: web3.PublicKey | undefined) {
         this._pubkey = pubkey
         if (!!pubkey) {
             const conn = new web3.Connection(network, 'processed')
-            this.provider = new AnchorProvider(conn, (window as any).solana, { preflightCommitment: 'processed' })
-            this.program = new Program(idl as Idl, new web3.PublicKey(idl.metadata.address), this.provider)
+            this._provider = new AnchorProvider(conn, (window as any).solana, { preflightCommitment: 'processed' })
+            this._program = new Program(idl as Idl, this.programId, this._provider)
+        }
+        else {
+            this._provider = undefined
+            this._program = undefined
         }
     }
-    get hash(): string {
-        return this._pubkey?.toBase58() || ""
+    get pubkey(): web3.PublicKey | undefined {
+        return this._pubkey
+    }
+    get program(): Program | undefined {
+        return this._program
+    }
+    get programId(): web3.PublicKey {
+        return new web3.PublicKey(idl.metadata.address)
+    }
+    get isConnected(): boolean {
+        return !!this.pubkey
     }
 }
 
