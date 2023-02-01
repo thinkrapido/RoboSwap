@@ -1,7 +1,8 @@
 
 import { web3 } from "@project-serum/anchor"
 import hex from "convert-hex"
-import _, { clamp } from "lodash"
+import _ from "lodash"
+import { clamp } from "./math"
 
 export const shorten = (hash: string): string => {
     if (!hash) {
