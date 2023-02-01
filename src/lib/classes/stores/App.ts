@@ -7,7 +7,8 @@ import idl from "../../../../../RoboSwapProgram/target/idl/robo_swap_program.jso
 import { robberStore } from "./Robots"
 import { gameStore } from "./Game"
 
-export const network = 'http://localhost:8899' // web3.clusterApiUrl('devnet');
+export const network = web3.clusterApiUrl('devnet')
+//export const network = 'http://localhost:8899'
 
 export class App {
     constructor() {
