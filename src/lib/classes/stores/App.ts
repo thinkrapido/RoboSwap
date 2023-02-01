@@ -3,7 +3,7 @@ import { debouncer } from "$lib/utils/debounce"
 import { writable, get } from "svelte/store"
 import { walletStore, type WalletStore } from "@svelte-on-solana/wallet-adapter-core"
 import { AnchorProvider, Program, type Idl, web3 } from "@project-serum/anchor"
-import idl from "../../../../../RoboSwapProgram/target/idl/robo_swap_program.json"
+import idl from "$lib/idl/robo_swap_program.json"
 import { robberStore } from "./Robots"
 import { gameStore } from "./Game"
 

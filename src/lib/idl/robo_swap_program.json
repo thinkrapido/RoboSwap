@@ -1,0 +1,158 @@
+{
+  "version": "0.1.0",
+  "name": "robo_swap_program",
+  "instructions": [
+    {
+      "name": "delete",
+      "accounts": [
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "pda",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "receiver",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize",
+      "accounts": [
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "pda",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "steal",
+      "accounts": [
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "robber",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "robberPda",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "victim",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "victimPda",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "robberIdx",
+          "type": "u8"
+        },
+        {
+          "name": "victimIdx",
+          "type": "u8"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Game",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "marker",
+            "type": {
+              "array": [
+                "u8",
+                8
+              ]
+            }
+          },
+          {
+            "name": "robots",
+            "type": {
+              "array": [
+                {
+                  "defined": "Robots"
+                },
+                26
+              ]
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "Robots",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "publicKey"
+          },
+          {
+            "name": "owner",
+            "type": "publicKey"
+          },
+          {
+            "name": "idx",
+            "type": "u8"
+          },
+          {
+            "name": "stolen",
+            "type": "u32"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "IndexOutOfBounds"
+    },
+    {
+      "code": 6001,
+      "name": "UserAndAccountNotEqual"
+    }
+  ]
+}
