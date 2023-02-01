@@ -11,7 +11,11 @@
 
   <Tabs />
 
-  <p class="text-red-300 border-yellow-400 border-2 my-4 mx-[10%] p-4 text-center text-yellow-200 bg-emerald-600">Your Wallet must be on <em>devnet</em>. If you don't know the address of another player use your own.</p>
+  <p class="text-red-300 border-yellow-400 border-2 my-4 mx-[10%] p-4 text-center text-yellow-200 bg-emerald-600">
+    Your Wallet must be on <em>devnet</em>. If you don't know the address of another player use your own.
+    <br />
+    And don't forget to airdrop some SOL.  
+  </p>
 
   <Notification/>
 
