@@ -1,7 +1,7 @@
 
 <script lang="ts">
 
-    import * as _ from "lodash"
+    import _ from "lodash"
 	import { Robots } from "$lib/classes/stores/Robots";
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
