@@ -70,22 +70,22 @@ export class GameStore {
                 pda: await this.pda(this.signer()._publicKey),
             })
             .rpc()
-            appStore.update((app: App): App => {
-                app.initialized = true
-                return app
-            })
-    }
+        appStore.update((app: App): App => {
+            app.initialized = true
+            return app
+        })
+}
     private async delete(): Promise<void> {
         if (!this._app) {
             return
         }
         await this._app.program?.methods
-        .delete()
-        .accounts({
-            receiver: this.signer()._publicKey,
-            pda: await this.pda(this.signer()._publicKey),
-        })
-        .rpc()
+            .delete()
+            .accounts({
+                receiver: this.signer()._publicKey,
+                pda: await this.pda(this.signer()._publicKey),
+            })
+            .rpc()
         appStore.update((app: App): App => {
             app.initialized = false
             return app
