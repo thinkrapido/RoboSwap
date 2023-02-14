@@ -18,7 +18,7 @@ export const hash = (pubkey: web3.PublicKey): string => {
 }
 
 const picHash = (pubkey: web3.PublicKey, idx: number): string => {
-    const newArray = [idx, ..._.take(pubkey.toBytes())]
+    const newArray = [idx, ..._.take(pubkey.toBytes(), 15)]
     const hash = hex.bytesToHex(newArray)
     return _.chunk(hash, 4).map((d: string[]): string => d.join('')).join(':')
 }
